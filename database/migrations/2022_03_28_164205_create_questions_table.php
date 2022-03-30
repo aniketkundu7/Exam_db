@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('chapter_id')->references('id')->on('chapters')->ondelete('cascade');
             $table->foreignId('question_type_id')->references('id')->on('question_types')->ondelete('cascade');
             $table->foreignId('question_level_id')->references('id')->on('question_levels')->ondelete('cascade');
+            $table->string('image');
             $table->timestamps();
         });
     }

@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('subject_id')->references('id')->on('subjects')->ondelete('cascade');
+            $table->string('chapter_name');
             $table->timestamps();
         });
     }

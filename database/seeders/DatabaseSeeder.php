@@ -5,6 +5,12 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Subject;
+use App\Models\Chapter;
+use App\Models\Question;
+use App\Models\Option;
+use App\Models\QuestionType;
+use App\Models\QuestionLevel;
+
 
 
 class DatabaseSeeder extends Seeder
@@ -39,10 +45,25 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
+        QuestionType::insert([
+            ['question_type_name' => 'single'],
+            ['question_type_name' => 'multiple'],
+            ['question_type_name' => 'boolean'],
+        ]);
+
+
+        QuestionLevel::insert([
+            ['level_name' => 'easy'],
+            ['level_name' => 'medium'],
+            ['level_name' => 'hard'],
+
+        ]);
+
+
         Question::insert([
-            ['question' => 'What is String?', 'subject_id' => 10, 'chapter_id' => 1, 'question_type_id' =>1, 'question_level_id' =>1,image],
-            ['question' => 'Define the class.', 'subject_id' => 10, 'chapter_id' => 2, 'question_type_id' =>2, 'question_level_id' =>2,image],
-            ['question' => 'Briefly describe the for loop use in python.', 'subject_id' => 10, 'chapter_id' => 3, 'question_type_id' =>3, 'question_level_id' =>3,image],
+            ['question' => 'What is String?', 'subject_id' => 10, 'chapter_id' => 1, 'question_type_id' =>1, 'question_level_id' =>1, 'image' => 'url'],
+            ['question' => 'Define the class.', 'subject_id' => 10, 'chapter_id' => 2, 'question_type_id' =>2, 'question_level_id' =>2, 'image' => 'url'],
+            ['question' => 'Briefly describe the for loop use in python.', 'subject_id' => 10, 'chapter_id' => 3, 'question_type_id' =>3, 'question_level_id' =>3, 'image' => 'url'],
         ]);
 
 
@@ -56,20 +77,10 @@ class DatabaseSeeder extends Seeder
 
 
         
-        Question_type::insert([
-            ['question_type_name' => 'single'],
-            ['question_type_name' => 'multiple'],
-            ['question_type_name' => 'boolean'],
-        ]);
+       
 
 
-        Question_level::insert([
-            ['level_name' => 'easy'],
-            ['level_name' => 'medium'],
-            ['level_name' => 'hard'],
-
-        ]);
-
+      
     }
 
 }
