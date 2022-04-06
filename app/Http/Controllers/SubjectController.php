@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Subject;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SubjectController extends Controller
 {
@@ -13,9 +15,10 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function get_subject()
     {
-        //
+        $subject = Subject::get();
+        return $subject;
     }
 
     /**
@@ -23,9 +26,25 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function save_subject(Request $request)
     {
-        //
+        $rules = array(
+            'subjectName' => 'required|unique:subjects,subject_name|max:20|min:1'
+        );
+        $messages = array(
+            'subjectName.required' => 'Please enter a subject Name',
+            'subjectName.unique' => 'Please enter a unique subject Name'
+        );
+        $validator =Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return response()->json(['success'=>1,'data'=>$validator->messages()], 200,[],JSON_NUMERIC_CHECK);
+        }
+        $subject = new Subject();
+        $subject -> subject_name = $request -> input('subjectName');
+
+        $subject -> save();
+
+        return response()->json(['success'=>1,'data'=>$subject], 200,[],JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -34,9 +53,23 @@ class SubjectController extends Controller
      * @param  \App\Http\Requests\StoreSubjectRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSubjectRequest $request)
+    public function update_subject(Request $request)
     {
-        //
+        $rules = array(
+            'subjectName' => 'required|unique:subjects,subject_name|max:20|min:1'
+        );
+        $messages = array(
+            'subjectName.required' => 'Please enter a subject Name',
+            'subjectName.unique' => 'Please enter a unique subject Name'
+        );
+        $validator =Validator::make($request->all(),$rules,$messages);
+        if($validator->fails()){
+            return response()->json(['success'=>1,'data'=>$validator->messages()], 200,[],JSON_NUMERIC_CHECK);
+        }
+        $subject = Subject::findOrFail($request->id);
+        $subject -> subject_name = $request -> input('subjectName');
+        $subject -> update();
+        return response()->json(['success'=>1,'data'=>$subject], 200,[],JSON_NUMERIC_CHECK);
     }
 
     /**

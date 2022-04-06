@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(array('prefix' => 'dev'), function() {
+    Route::get("getSubjects", [SubjectController::class,'get_subject']);
+    Route::post("saveSubject", [SubjectController::class,'save_subject']);
+    Route::patch("updateSubject", [SubjectController::class,'update_subject']);
 });
